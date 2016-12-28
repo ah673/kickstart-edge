@@ -15,11 +15,10 @@ app.get('/', function (req, res) {
 
   request(url, function(error, response, html) {
     if (error) {
-      console.log(error);
-      return;
+      res.writeHead(500, error);
+      res.end();
     }
 
-    // res.writeHead(200);
     res.json(parsePledgeLevels(html));
 
   });
