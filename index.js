@@ -1,6 +1,6 @@
 // make environment variable or user input
 const url = 'https://www.kickstarter.com/projects/poots/kingdom-death-monster-15';
-const pledgeTiers = ['Frogdog'];
+const requestedTiers = ['Frogdog'];
 
 
 
@@ -18,28 +18,34 @@ app.get('/', function (req, res) {
       console.log(error);
       return;
     }
-    parseForTiers(html, pledgeTiers);
-    res.writeHead(200);
-    res.end(html);
+
+    // res.writeHead(200);
+    res.json(parsePledgeLevels(html));
 
   });
 
 });
 
-function parseForTiers (html, pledgeTiers) {
+function parsePledgeLevels (html) {
   var $ = cheerio.load(html);
   artoo.setContext($);
 
-  var list = artoo.scrape('.NS_projects__rewards_list li.pledge--available:not([data-prefill-amount])', {
+  const tierAvailability = artoo.scrape('.NS_projects__rewards_list li.pledge--available:not([data-prefill-amount]), li.pledge--all-gone', {
     pledgeTitle: {
       sel: '.pledge__title',
       method: function ($) {
-        return String($(this).text()).trim();
+        return $(this).text().trim();
+      }
+    },
+    pledgeAvailable: {
+      sel: '.pledge__backer-stats',
+      method: function ($) {
+        var allGone = $(this).children('.pledge__limit').text().trim() === 'Reward no longer available';
+        return !allGone;
       }
     }
   });
-  console.log(list);
-
+  return tierAvailability;
 }
 
 app.listen('8000');
