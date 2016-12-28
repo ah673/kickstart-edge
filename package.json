@@ -4,11 +4,14 @@
   "description": "Scrapes page for pledge level change",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "artoo-js": "^0.3.2",
+    "cheerio": "^0.22.0",
     "express": "4.14.0",
     "request": "2.79.0"
   }
