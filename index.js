@@ -30,12 +30,13 @@ function parseForTiers (html, pledgeTiers) {
   var $ = cheerio.load(html);
   artoo.setContext($);
 
-  var list = artoo.scrape('.NS_projects__rewards_list li.hover-group', {
-    pledgeLevel: {
+  var list = artoo.scrape('.NS_projects__rewards_list li.pledge--available:not([data-prefill-amount])', {
+    pledgeTitle: {
       sel: '.pledge__title',
-      method: 'text'
+      method: function ($) {
+        return String($(this).text()).trim();
+      }
     }
-
   });
   console.log(list);
 
