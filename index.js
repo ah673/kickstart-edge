@@ -17,6 +17,7 @@ app.get('/', function (req, res) {
     if (error) {
       res.writeHead(500, error);
       res.end();
+      return;
     }
 
     res.json(parsePledgeLevels(html));
