@@ -37,15 +37,44 @@ function parsePledgeLevels (html) {
         return $(this).text().trim();
       }
     },
-    pledgeAvailable: {
+    backerStats: {
       sel: '.pledge__backer-stats',
       method: function ($) {
-        var allGone = $(this).children('.pledge__limit').text().trim() === 'Reward no longer available';
-        return !allGone;
+        var results = {
+          max: null,
+          remaining: null,
+          pledged: null
+        };
+
+        var backerCount = backers($(this).children('.pledge__backer-count').text());
+        var pledgeLimit = $(this).children('.pledge__limit').text().trim();
+        if (pledgeLimit === 'Reward no longer available') {
+          results.max = backerCount;
+          results.remaining = 0;
+          results.pledged = backerCount;
+        } else {
+          var demandAndSupply = pledgeLimit.match(/(\d+) left of (\d+)/);
+          // no limit on backers
+          if (demandAndSupply === null) {
+            results.max = null;
+            results.remaining = null;
+            results.pledged = backerCount;
+          } else {
+            results.max = parseInt(demandAndSupply[2]);
+            results.remaining = parseInt(demandAndSupply[1]);
+            results.pledged = backerCount;
+          }
+        }
+
+        return results;
       }
     }
   });
   return tierAvailability;
+}
+
+function backers (backerStr) {
+  return parseInt(backerStr.trim().replace(/\,/g, '').match(/(\d+) backers/)[1]);
 }
 
 app.listen('8000');
