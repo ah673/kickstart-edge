@@ -1,19 +1,15 @@
-// make environment variable or user input
-const url = 'https://www.kickstarter.com/projects/poots/kingdom-death-monster-15';
-const requestedTiers = ['Frogdog'];
-
-
-
 const express = require('express');
 const request = require('request');
 const artoo = require('artoo-js');
 const cheerio = require('cheerio');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
+app.post('/api/kickstarter-info', function (req, res) {
 
-  request(url, function(error, response, html) {
+  request(req.body.kickstarterUrl, function(error, response, html) {
     if (error) {
       res.writeHead(500, error);
       res.end();
