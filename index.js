@@ -12,7 +12,13 @@ console.log('app listening on port', process.env.PORT || 8000);
 
 app.post('/api/kickstarter-info', function (req, res) {
   console.log('getting page', req.body.kickstarterUrl);
-  request(req.body.kickstarterUrl, function(error, response, html) {
+  var options = {
+    url: req.body.kickstarterUrl,
+    headers: {
+      'User-Agent': 'request'
+    }
+  };
+  request(options, function(error, response, html) {
     if (error) {
       console.error('error requesting url', req.body.kickstarterUrl);
       res.writeHead(500, error);
