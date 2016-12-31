@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
+app.listen('8000');
+console.log('app listening on port', 8000);
+
 app.post('/api/kickstarter-info', function (req, res) {
 
   request(req.body.kickstarterUrl, function(error, response, html) {
@@ -72,9 +75,5 @@ function parsePledgeLevels (html) {
 function backers (backerStr) {
   return parseInt(backerStr.trim().replace(/\,/g, '').match(/(\d+) backers/)[1]);
 }
-
-app.listen('8000');
-
-console.log('app listening on port', 8000);
 
 exports = module.exports = app;
