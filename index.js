@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const request = require('request');
 const artoo = require('artoo-js');
@@ -33,8 +34,7 @@ app.post('/api/kickstarter-info', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-  res.writeHead(200);
-  res.end('Front end goes here');
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 function parsePledgeLevels (html) {
