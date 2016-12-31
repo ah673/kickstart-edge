@@ -7,13 +7,14 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-app.listen('8000');
-console.log('app listening on port', 8000);
+app.listen(process.env.PORT || 8000);
+console.log('app listening on port', process.env.PORT || 8000);
 
 app.post('/api/kickstarter-info', function (req, res) {
-
+  console.log('getting page', req.body.kickstarterUrl);
   request(req.body.kickstarterUrl, function(error, response, html) {
     if (error) {
+      console.error('error requesting url', req.body.kickstarterUrl);
       res.writeHead(500, error);
       res.end();
       return;
@@ -25,7 +26,13 @@ app.post('/api/kickstarter-info', function (req, res) {
 
 });
 
+app.get('/', function (req, res) {
+  res.writeHead(200);
+  res.end('Front end goes here');
+});
+
 function parsePledgeLevels (html) {
+  console.log(html);
   var $ = cheerio.load(html);
   artoo.setContext($);
 
@@ -69,6 +76,7 @@ function parsePledgeLevels (html) {
       }
     }
   });
+  console.log('tierAvailability', tierAvailability);
   return tierAvailability;
 }
 
