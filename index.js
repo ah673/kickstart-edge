@@ -12,6 +12,7 @@ app.listen(process.env.PORT || 8000);
 console.log('app listening on port', process.env.PORT || 8000);
 
 app.post('/api/kickstarter-info', function (req, res) {
+  console.log(req.body);
   console.log('getting page', req.body.kickstarterUrl);
   var options = {
     url: req.body.kickstarterUrl,
@@ -35,6 +36,14 @@ app.post('/api/kickstarter-info', function (req, res) {
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
+});
+
+app.get('/main.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '/main.css'));
+});
+
+app.get('/main.js', function (req, res) {
+  res.sendFile(path.join(__dirname, '/main.js'));
 });
 
 function parsePledgeLevels (html) {

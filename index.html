@@ -1,10 +1,50 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- App -->
+    <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
 <body>
 
-<h1>Kickstart Edge</h1>
+<div class="container" id="main">
+    <h1>Kickstart-Edge</h1>
 
-<p>Some Text</p>
+    <div class="jumbotron">
+        <form id="pledgeForm">
+            <div class="form-group">
+                <input class="form-control" name="kickstarterUrl" id="kickstarterUrl" placeholder="Kickstarter URL">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="pledgeLevels" placeholder="Pledge Level" id="pledgeLevels">
+                <button>+</button>
+            </div>
+            <button type="submit" class="btn btn-default">Watch</button>
+        </form>
+    </div>
+
+    <div class="jumbotron" id="results">
+
+    </div>
+</div><!-- /.container -->
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<!-- App -->
+<script src="main.js"></script>
 
 </body>
 </html>

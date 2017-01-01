@@ -1,0 +1,18 @@
+h1 {
+    text-align: center;
+}
+
+form > .form-group {
+    text-align: left;
+}
+
+#pledgeForm {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#pledgeLevels {
+    width: 370px;
+    display: inline
+}
