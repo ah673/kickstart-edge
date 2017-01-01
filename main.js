@@ -3,20 +3,50 @@ $(document).ready(function () {
 });
 
 function listen() {
-  $('#pledgeForm').submit(function (event) {
+  $('#retrievePledgeLevelsBtn').click(function () {
     event.preventDefault();
-    watch($('#kickstarterUrl').val(), $('#pledgeLevels').val());
+    retrievePledgeLevels($('input[name=kickstarterUrl]').val());
+  });
+
+  $('#watchBtn').click(function() {
+    event.preventDefault();
+    watch($('input[name=kickstarterUrl]').val(), []);
   });
 }
 
-function watch(url, pledgeLevels) {
+/**
+ * Retrieve pledge levels from Kickstarter URL
+ * @param url {string}
+ */
+function retrievePledgeLevels(url) {
+  let $dropdown = $('select[name=pledgeLevels]');
+  let $firstOption = $dropdown.find('option:eq(0)');
+
+  $firstOption.text("Loading ...");
+
   $.ajax({
     type: 'POST',
     url: '/api/kickstarter-info',
     dataType: 'json',
     contentType: 'application/json',
     data: JSON.stringify({kickstarterUrl: url})
-  }).done(function(data) {
-    $('#results').html(data)
+  }).done(function(levels) {
+    levels.forEach(function(level) {
+      $dropdown.append('<option>' + level.pledgeTitle + '</option>');
+    });
+
+    $firstOption.remove();
+  }).fail(function() {
+    alert("Error retrieving pledge levels from Kickstarter.");
+    $firstOption.text("Pledge Levels");
   });
+}
+
+/**
+ * Monitor Kickstarter page for updates to selected pledge levels
+ * @param url {string}
+ * @param levels {Array}
+ */
+function watch(url, levels) {
+  //TODO: complete stub
 }

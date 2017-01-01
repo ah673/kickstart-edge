@@ -20,17 +20,19 @@
     <div class="jumbotron">
         <form>
             <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-center">
-                <div class="form-group">
-                    <input class="form-control" name="kickstarterUrl" id="kickstarterUrl" placeholder="Kickstarter URL">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <div class="form-group">
+                        <input class="form-control" name="kickstarterUrl" placeholder="Kickstarter URL">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="pledgeLevels" title="Pledge Levels">
+                            <option>Pledge Level</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-default" id="retrievePledgeLevelsBtn">Retrieve Pledge Levels</button>
+                    <button class="btn btn-default" id="watchBtn">Watch</button>
                 </div>
-                <div class="form-group">
-                    <input class="form-control" name="pledgeLevels" placeholder="Pledge Level" id="pledgeLevels">
-                </div>
-                <button type="submit" class="btn btn-default">Watch</button>
             </div>
-            </div>
-
         </form>
     </div>
 

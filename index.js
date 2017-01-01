@@ -12,7 +12,6 @@ app.listen(process.env.PORT || 8000);
 console.log('app listening on port', process.env.PORT || 8000);
 
 app.post('/api/kickstarter-info', function (req, res) {
-  console.log(req.body);
   console.log('getting page', req.body.kickstarterUrl);
   var options = {
     url: req.body.kickstarterUrl,
