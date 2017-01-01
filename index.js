@@ -87,7 +87,7 @@ function parsePledgeLevels (html) {
 }
 
 function backers (backerStr) {
-  return parseInt(backerStr.trim().replace(/\,/g, '').match(/(\d+) backers/)[1]);
+  return parseInt(backerStr.trim().replace(/\,/g, '').match(/(\d+) backers?/)[1]);
 }
 
 exports = module.exports = app;
