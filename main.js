@@ -24,21 +24,15 @@ function retrievePledgeLevels(url) {
 
   $firstOption.text("Loading ...");
 
-  $.ajax({
-    type: 'POST',
-    url: '/api/kickstarter-info',
-    dataType: 'json',
-    contentType: 'application/json',
-    data: JSON.stringify({kickstarterUrl: url})
-  }).done(function(levels) {
+  getKickstarterPledgeInfo(url, function(err, levels) {
+    if (err) {
+      $firstOption.text("Pledge Levels");
+      return;
+    }
     levels.forEach(function(level) {
       $dropdown.append('<option>' + level.pledgeTitle + '</option>');
+      $firstOption.remove();
     });
-
-    $firstOption.remove();
-  }).fail(function() {
-    alert("Error retrieving pledge levels from Kickstarter.");
-    $firstOption.text("Pledge Levels");
   });
 }
 
@@ -47,6 +41,20 @@ function retrievePledgeLevels(url) {
  * @param url {string}
  * @param levels {Array}
  */
-function watch(url, levels) {
-  //TODO: complete stub
+function watch(url, levels, doneFn) {
+
+}
+
+function getKickstarterPledgeInfo(url, doneFn) {
+  $.ajax({
+    type: 'POST',
+    url: '/api/kickstarter-info',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({kickstarterUrl: url})
+  }).done(function(results) {
+    doneFn(null, results);
+  }).fail(function() {
+    doneFn('Could not retrieve pledge levels');
+  });
 }
