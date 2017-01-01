@@ -11,13 +11,3 @@ h1 span.green {
 h1 span.black {
     color: #020621;
 }
-
-form > .form-group {
-    text-align: left;
-}
-
-#pledgeForm {
-    width: 400px;
-    margin: 0 auto;
-    text-align: center;
-}
