@@ -10,7 +10,7 @@ function listen() {
 
   $('#watchBtn').click(function() {
     event.preventDefault();
-    watch($('input[name=kickstarterUrl]').val(), []);
+    watch($('input[name=kickstarterUrl]').val(), ['Frogdog']);
   });
 }
 
@@ -37,12 +37,26 @@ function retrievePledgeLevels(url) {
 }
 
 /**
- * Monitor Kickstarter page for updates to selected pledge levels
+ * Monitor Kickstarter page every 30 seconds for updates to selected pledge levels
  * @param url {string}
  * @param levels {Array}
  */
-function watch(url, levels, doneFn) {
+function watch(url, desiredLevels) {
+  const intervalId = setInterval(function(){
+    getKickstarterPledgeInfo(url, function(err, results){
+      if (err) {
+        //do something
+        return;
+      }
+      const relevantPledgeLevels = results.filter(function(campaignPledge){
+        return desiredLevels.some(function(element){
+          return element === campaignPledge.pledgeTitle;
+        })
+      });
 
+      console.log('relevant pledge levels', relevantPledgeLevels);
+    })
+  }, 30000);
 }
 
 function getKickstarterPledgeInfo(url, doneFn) {
