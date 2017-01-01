@@ -1,5 +1,15 @@
-h1 {
+h1.title {
     text-align: center;
+    font-size: 85px;
+    text-transform: uppercase;
+}
+
+h1 span.green {
+    color: #2BDE73;
+}
+
+h1 span.black {
+    color: #020621;
 }
 
 form > .form-group {
@@ -10,9 +20,4 @@ form > .form-group {
     width: 400px;
     margin: 0 auto;
     text-align: center;
-}
-
-#pledgeLevels {
-    width: 370px;
-    display: inline
 }
