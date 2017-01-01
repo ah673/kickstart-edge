@@ -20,8 +20,10 @@ function listen() {
  */
 function retrievePledgeLevels(url) {
   let $dropdown = $('select[name=pledgeLevels]');
+  $dropdown.children('option').remove();
+  $dropdown.append('<option>Loading ...</option>');
   let $firstOption = $dropdown.find('option:eq(0)');
-
+  
   $firstOption.text("Loading ...");
 
   getKickstarterPledgeInfo(url, function(err, levels) {
