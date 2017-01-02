@@ -1,24 +1,24 @@
 $(document).ready(function () {
-  listen();
+    listen();
 });
 
 function listen() {
-  let $kickstarterUrl = $('input[name=kickstarterUrl]');
+    let $kickstarterUrl = $('input[name=kickstarterUrl]');
 
-  $('#retrievePledgeLevelsBtn').click(function () {
-    event.preventDefault();
-    retrievePledgeLevels($kickstarterUrl.val());
-  });
+    $('#retrievePledgeLevelsBtn').click(function () {
+        event.preventDefault();
+        retrievePledgeLevels($kickstarterUrl.val());
+    });
 
-  $('#watchBtn').click(function () {
-    event.preventDefault();
-    watch($kickstarterUrl.val(), ['Frogdog']);
-  });
+    $('#watchBtn').click(function () {
+        event.preventDefault();
+        watch($kickstarterUrl.val(), ['Frogdog']);
+    });
 
-  $('select[name=pledgeLevels]').change(function () {
-    //let $selected = $(this).children('option:selected');
-    watch($kickstarterUrl.val(), [$(this).val()])
-  });
+    $('select[name=pledgeLevels]').change(function () {
+        //let $selected = $(this).children('option:selected');
+        watch($kickstarterUrl.val(), [$(this).val()])
+    });
 }
 
 /**
@@ -26,25 +26,25 @@ function listen() {
  * @param url {string}
  */
 function retrievePledgeLevels(url) {
-  let $dropdown = $('select[name=pledgeLevels]');
-  $dropdown.children('option').remove();
-  $dropdown.append('<option>Loading ...</option>');
-  let $firstOption = $dropdown.find('option:eq(0)');
+    let $dropdown = $('select[name=pledgeLevels]');
+    $dropdown.children('option').remove();
+    $dropdown.append('<option>Loading ...</option>');
+    let $firstOption = $dropdown.find('option:eq(0)');
 
-  $firstOption.text("Loading ...");
+    $firstOption.text("Loading ...");
 
-  getKickstarterPledgeInfo(url, function (err, levels) {
-    if (err) {
-      $firstOption.text("Pledge Levels");
-      return;
-    }
-    levels.forEach(function (level) {
-      $dropdown.append('<option>' + level.pledgeTitle + '</option>');
-      $firstOption.remove();
+    getKickstarterPledgeInfo(url, function (err, levels) {
+        if (err) {
+            $firstOption.text("Pledge Levels");
+            return;
+        }
+        levels.forEach(function (level) {
+            $dropdown.append('<option>' + level.pledgeTitle + '</option>');
+            $firstOption.remove();
+        });
+
+        $dropdown.attr("disabled", false);
     });
-
-    $dropdown.attr("disabled", false);
-  });
 }
 
 /**
@@ -53,33 +53,32 @@ function retrievePledgeLevels(url) {
  * @param levels {Array}
  */
 function watch(url, desiredLevels) {
-  function kickstarterInfo(err, results) {
-    if (err) {
-      //do something
-      return;
+    function kickstarterInfo(err, results) {
+        if (err) {
+            //do something
+            return;
+        }
+        showRelevant(results, desiredLevels);
     }
-    showRelevant(results, desiredLevels);
-  }
 
-  getKickstarterPledgeInfo(url, kickstarterInfo);
-
-  const intervalId = setInterval(function () {
     getKickstarterPledgeInfo(url, kickstarterInfo);
-  }, 30000);
+
+    const intervalId = setInterval(function () {
+        getKickstarterPledgeInfo(url, kickstarterInfo);
+    }, 30000);
 }
 
-
 function showRelevant(results, desiredLevels) {
-  const relevantPledgeLevels = results.filter(function (campaignPledge) {
-    return desiredLevels.some(function (element) {
-      return element === campaignPledge.pledgeTitle;
+    const relevantPledgeLevels = results.filter(function (campaignPledge) {
+        return desiredLevels.some(function (element) {
+            return element === campaignPledge.pledgeTitle;
+        });
     });
-  });
 
-  let date = (new Date()).toTimeString();
+    let date = (new Date()).toTimeString();
 
-  relevantPledgeLevels.forEach(function (pledgeLevel) {
-    $('#pledge-levels').prepend(`
+    relevantPledgeLevels.forEach(function (pledgeLevel) {
+        $('#pledge-levels').prepend(`
       <tr>
          <td>${pledgeLevel.pledgeTitle}</td>
          <td>${pledgeLevel.backerStats.remaining || 'Unlimited'}</td>
@@ -88,20 +87,20 @@ function showRelevant(results, desiredLevels) {
          <td>${date}</td>
       </tr>
       `);
-  })
+    })
 
 }
 
 function getKickstarterPledgeInfo(url, doneFn) {
-  $.ajax({
-    type: 'POST',
-    url: '/api/kickstarter-info',
-    dataType: 'json',
-    contentType: 'application/json',
-    data: JSON.stringify({kickstarterUrl: url})
-  }).done(function (results) {
-    doneFn(null, results);
-  }).fail(function () {
-    doneFn('Could not retrieve pledge levels');
-  });
+    $.ajax({
+        type: 'POST',
+        url: '/api/kickstarter-info',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({kickstarterUrl: url})
+    }).done(function (results) {
+        doneFn(null, results);
+    }).fail(function () {
+        doneFn('Could not retrieve pledge levels');
+    });
 }
