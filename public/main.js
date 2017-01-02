@@ -2,6 +2,8 @@ $(document).ready(function () {
     listen();
 });
 
+let intervalId = null;
+
 function listen() {
     let $kickstarterUrl = $('input[name=kickstarterUrl]');
 
@@ -53,37 +55,51 @@ function watch(url, desiredLevels) {
             //do something
             return;
         }
-        showRelevant(results, desiredLevels);
+        const relevantLevels = getRelevantPledges(results, desiredLevels);
+        addStatsToTable(relevantLevels);
+        const slotAvailable = relevantLevels.some(function(data){
+            return data.backerStats.remaining === null || data.backerStats.remaining > 0
+        });
+
+        if(slotAvailable) {
+            clearInterval(intervalId);
+
+            //redirects to kickstarter
+            window.open($('input[name=kickstarterUrl]').val());
+        }
     }
 
     getKickstarterPledgeInfo(url, kickstarterInfo);
 
-    const intervalId = setInterval(function () {
+    intervalId = setInterval(function () {
         getKickstarterPledgeInfo(url, kickstarterInfo);
     }, 30000);
 }
 
-function showRelevant(results, desiredLevels) {
-    const relevantPledgeLevels = results.filter(function (campaignPledge) {
+function getRelevantPledges(results, desiredLevels) {
+    return results.filter(function (campaignPledge) {
         return desiredLevels.some(function (element) {
             return element === campaignPledge.pledgeTitle;
         });
     });
 
+}
+
+function addStatsToTable(pledgeLevels) {
     let date = (new Date()).toTimeString();
 
-    relevantPledgeLevels.forEach(function (pledgeLevel) {
+    pledgeLevels.forEach(function (pledgeLevel) {
+
         $('#pledge-levels').prepend(`
       <tr>
          <td>${pledgeLevel.pledgeTitle}</td>
-         <td>${pledgeLevel.backerStats.remaining || 'Unlimited'}</td>
-         <td>${pledgeLevel.backerStats.pledged}</td>
+         <td>${pledgeLevel.backerStats.remaining  === null ? 'Unlimited': pledgeLevel.backerStats.remaining}</td>
+         <td>${pledgeLevel.backerStats.pledged }</td>
          <td>${pledgeLevel.backerStats.max || 'Unlimited'}</td>
          <td>${date}</td>
       </tr>
       `);
-    })
-
+    });
 }
 
 function getKickstarterPledgeInfo(url, doneFn) {
