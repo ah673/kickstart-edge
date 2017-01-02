@@ -12,7 +12,7 @@ function listen() {
 
     $('#watchBtn').click(function () {
         event.preventDefault();
-        watch($kickstarterUrl.val(), ['Frogdog']);
+        watch($kickstarterUrl.val(), $('select[name=pledgeLevels]').val());
     });
 }
 
