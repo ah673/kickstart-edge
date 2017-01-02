@@ -35,6 +35,8 @@ function retrievePledgeLevels(url) {
       $dropdown.append('<option>' + level.pledgeTitle + '</option>');
       $firstOption.remove();
     });
+
+    $dropdown.attr("disabled", false);
   });
 }
 
