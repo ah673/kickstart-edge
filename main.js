@@ -44,21 +44,42 @@ function retrievePledgeLevels(url) {
  * @param levels {Array}
  */
 function watch(url, desiredLevels) {
-  const intervalId = setInterval(function(){
-    getKickstarterPledgeInfo(url, function(err, results){
-      if (err) {
+  function kickstarterInfo (err, results) {
+    if (err) {
         //do something
         return;
-      }
-      const relevantPledgeLevels = results.filter(function(campaignPledge){
-        return desiredLevels.some(function(element){
-          return element === campaignPledge.pledgeTitle;
-        })
-      });
+    }
+    showRelevant(results, desiredLevels);
+  }
 
-      console.log('relevant pledge levels', relevantPledgeLevels);
-    })
+  getKickstarterPledgeInfo(url, kickstarterInfo);
+
+  const intervalId = setInterval(function () {
+    getKickstarterPledgeInfo(url, kickstarterInfo);
   }, 30000);
+}
+
+
+
+function showRelevant (results, desiredLevels) {
+    const relevantPledgeLevels = results.filter(function(campaignPledge){
+      return desiredLevels.some(function(element){
+          return element === campaignPledge.pledgeTitle;
+      });
+    });
+
+    relevantPledgeLevels.forEach(function (pledgeLevel) {
+      $('#pledge-levels').prepend(`
+      <tr>
+         <td>${pledgeLevel.pledgeTitle}</td>
+         <td>${pledgeLevel.backerStats.remaining || 'Unlimited'}</td>
+         <td>${pledgeLevel.backerStats.pledged}</td>
+         <td>${pledgeLevel.backerStats.max || 'Unlimited'}</td>
+         <td>${new Date()}</td>
+      </tr>
+      `);
+    })
+
 }
 
 function getKickstarterPledgeInfo(url, doneFn) {
