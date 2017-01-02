@@ -14,11 +14,6 @@ function listen() {
         event.preventDefault();
         watch($kickstarterUrl.val(), ['Frogdog']);
     });
-
-    $('select[name=pledgeLevels]').change(function () {
-        //let $selected = $(this).children('option:selected');
-        watch($kickstarterUrl.val(), [$(this).val()])
-    });
 }
 
 /**
