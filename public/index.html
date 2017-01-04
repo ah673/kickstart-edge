@@ -24,16 +24,22 @@
                     <div class="form-group">
                         <input class="form-control" name="kickstarterUrl" placeholder="Kickstarter URL">
                     </div>
-                    <div class="form-group">
-                        <select class="form-control" name="pledgeLevels" title="Pledge Levels" disabled multiple>
-                            <option>Pledge Level</option>
-                        </select>
-                    </div>
                     <button class="btn btn-default" id="retrievePledgeLevelsBtn">Retrieve Pledge Levels</button>
-                    <button class="btn btn-default" id="watchBtn">Watch</button>
+                    <button class="btn btn-danger" id="resetBtn">Reset</button>
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="jumbotron">
+        <div class="form-group">
+            <select class="form-control" name="pledgeLevels" title="Pledge Levels" disabled multiple>
+                <option>Pledge Level</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-default" id="watchBtn">Watch</button>
+        </div>
     </div>
 
     <div class="jumbotron">
