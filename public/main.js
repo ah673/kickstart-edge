@@ -16,6 +16,11 @@ function listen() {
         event.preventDefault();
         watch($kickstarterUrl.val(), $('select[name=pledgeLevels]').val());
     });
+
+    $('#resetBtn').click(function () {
+        event.preventDefault();
+        resetForm();
+    });
 }
 
 /**
@@ -128,4 +133,10 @@ function getKickstarterPledgeInfo(url, doneFn) {
     }).fail(function () {
         doneFn('Could not retrieve pledge levels');
     });
+}
+
+function resetForm () {
+    $('input[name=kickstarterUrl]').val('');
+    $('select[name=pledgeLevels]').empty();
+    $('#pledge-levels tr').remove();
 }
