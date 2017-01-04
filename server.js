@@ -14,7 +14,7 @@ console.log('app listening on port', process.env.PORT || 8000);
 
 app.post('/api/kickstarter-info', function (req, res) {
     console.log('getting page', req.body.kickstarterUrl);
-    var options = {
+    let options = {
         url: req.body.kickstarterUrl,
         headers: {
             'User-Agent': 'request'
@@ -29,14 +29,13 @@ app.post('/api/kickstarter-info', function (req, res) {
         }
 
         res.json(parsePledgeLevels(html));
-
     });
 
 });
 
 function parsePledgeLevels(html) {
     console.log(html);
-    var $ = cheerio.load(html);
+    let $ = cheerio.load(html);
     artoo.setContext($);
 
     const tierAvailability = artoo.scrape('.NS_projects__rewards_list li.pledge--available:not([data-prefill-amount]), li.pledge--all-gone', {
@@ -49,20 +48,20 @@ function parsePledgeLevels(html) {
         backerStats: {
             sel: '.pledge__backer-stats',
             method: function ($) {
-                var results = {
+                let results = {
                     max: null,
                     remaining: null,
                     pledged: null
                 };
 
-                var backerCount = backers($(this).children('.pledge__backer-count').text());
-                var pledgeLimit = $(this).children('.pledge__limit').text().trim();
+                let backerCount = backers($(this).children('.pledge__backer-count').text());
+                let pledgeLimit = $(this).children('.pledge__limit').text().trim();
                 if (pledgeLimit === 'Reward no longer available') {
                     results.max = backerCount;
                     results.remaining = 0;
                     results.pledged = backerCount;
                 } else {
-                    var demandAndSupply = pledgeLimit.match(/(\d+) left of (\d+)/);
+                    let demandAndSupply = pledgeLimit.match(/(\d+) left of (\d+)/);
                     // no limit on backers
                     if (demandAndSupply === null) {
                         results.max = null;
@@ -79,12 +78,25 @@ function parsePledgeLevels(html) {
             }
         }
     });
+
     console.log('tierAvailability', tierAvailability);
+    console.log(isExpired());
+
     return tierAvailability;
 }
 
 function backers(backerStr) {
-    return parseInt(backerStr.trim().replace(/\,/g, '').match(/(\d+) backers?/)[1]);
+    return parseInt(backerStr.trim().replace(/,/g, '').match(/(\d+) backers?/)[1]);
+}
+
+/**
+ * Check if Kickstarter is expired.
+ * @returns {boolean}
+ */
+function isExpired() {
+    let spotlight = artoo.scrape('.NS_campaigns__spotlight_stats');
+
+    return spotlight.length !== 0;
 }
 
 exports = module.exports = app;
