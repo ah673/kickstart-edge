@@ -139,4 +139,5 @@ function resetForm () {
     $('input[name=kickstarterUrl]').val('');
     $('select[name=pledgeLevels]').empty();
     $('#pledge-levels tr').remove();
+    clearInterval(intervalId);
 }
