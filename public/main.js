@@ -138,13 +138,14 @@ function getKickstarterPledgeInfo(url, doneFn) {
 }
 
 function resetForm () {
+    let $pledgeLevelsTable = $('#pledge-levels');
+    let $pledgeLevelsDropdown = $('select[name=pledgeLevels]');
+
     $('input[name=kickstarterUrl]').val('');
-
-    $('#pledge-levels tr').remove();
-    $('#pledge-levels').parents('.jumbotron').attr('hidden', true);
-
-    $('select[name=pledgeLevels]').empty();
-    $('select[name=pledgeLevels]').parents('.jumbotron').attr('hidden', true);
+    $pledgeLevelsTable.find('tr').remove();
+    $pledgeLevelsTable.parents('.jumbotron').attr('hidden', true);
+    $pledgeLevelsDropdown.empty();
+    $pledgeLevelsDropdown.parents('.jumbotron').attr('hidden', true);
 
     clearInterval(intervalId);
 }
