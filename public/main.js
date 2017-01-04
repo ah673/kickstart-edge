@@ -44,8 +44,9 @@ function retrievePledgeLevels(url) {
             $dropdown.append('<option>' + level.pledgeTitle + '</option>');
             $firstOption.remove();
         });
-
         $dropdown.attr("disabled", false);
+        $dropdown.parents('.jumbotron').removeAttr('hidden');
+
     });
 }
 
@@ -60,6 +61,7 @@ function watch(url, desiredLevels) {
             //do something
             return;
         }
+        $('#pledge-levels').parents('.jumbotron').removeAttr('hidden');
         const relevantLevels = getRelevantPledges(results, desiredLevels);
         addStatsToTable(relevantLevels);
         const slotAvailable = relevantLevels.some(function (data) {
@@ -137,7 +139,12 @@ function getKickstarterPledgeInfo(url, doneFn) {
 
 function resetForm () {
     $('input[name=kickstarterUrl]').val('');
-    $('select[name=pledgeLevels]').empty();
+
     $('#pledge-levels tr').remove();
+    $('#pledge-levels').parents('.jumbotron').attr('hidden', true);
+
+    $('select[name=pledgeLevels]').empty();
+    $('select[name=pledgeLevels]').parents('.jumbotron').attr('hidden', true);
+
     clearInterval(intervalId);
 }

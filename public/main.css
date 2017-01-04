@@ -2,6 +2,7 @@ h1.title {
     text-align: center;
     font-size: 85px;
     text-transform: uppercase;
+    padding: 20px 0;
 }
 
 h1 span.green {
@@ -15,3 +16,29 @@ h1 span.black {
 select[name=pledgeLevels] {
     height: 200px;
 }
+
+body {
+    background-color: #FBFBFA;
+}
+
+.jumbotron {
+    background-color: white;
+    box-shadow: 0 2px 4px 0 #DCDEDD
+
+}
+
+.btn-success {
+    background-color: #25CB68;
+    color: white;
+
+}
+
+.btn:hover {
+    box-shadow: none;
+    border: 0;
+}
+
+.btn.btn-default {
+    color: #626369;
+}
+
