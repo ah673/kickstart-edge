@@ -11,3 +11,9 @@ h1 span.green {
 h1 span.black {
     color: #020621;
 }
+
+select[name=pledgeLevels] {
+    height: 200px;
+    max-width: 500px;
+    margin:0 auto;
+}

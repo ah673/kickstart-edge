@@ -47,7 +47,7 @@ function retrievePledgeLevels(url) {
 /**
  * Monitor Kickstarter page every 30 seconds for updates to selected pledge levels
  * @param url {string}
- * @param levels {Array}
+ * @param desiredLevels {Array}
  */
 function watch(url, desiredLevels) {
     function kickstarterInfo(err, results) {
@@ -57,11 +57,11 @@ function watch(url, desiredLevels) {
         }
         const relevantLevels = getRelevantPledges(results, desiredLevels);
         addStatsToTable(relevantLevels);
-        const slotAvailable = relevantLevels.some(function(data){
+        const slotAvailable = relevantLevels.some(function (data) {
             return data.backerStats.remaining === null || data.backerStats.remaining > 0
         });
 
-        if(slotAvailable) {
+        if (slotAvailable) {
             clearInterval(intervalId);
 
             //redirects to kickstarter
@@ -76,15 +76,24 @@ function watch(url, desiredLevels) {
     }, 30000);
 }
 
+/**
+ * Filter Pledges based on desired levels
+ * @param results {Array}
+ * @param desiredLevels
+ * @returns {Array}
+ */
 function getRelevantPledges(results, desiredLevels) {
     return results.filter(function (campaignPledge) {
         return desiredLevels.some(function (element) {
             return element === campaignPledge.pledgeTitle;
         });
     });
-
 }
 
+/**
+ * Add pledge information to results table
+ * @param pledgeLevels {Array}
+ */
 function addStatsToTable(pledgeLevels) {
     let date = (new Date()).toTimeString();
 
@@ -93,7 +102,7 @@ function addStatsToTable(pledgeLevels) {
         $('#pledge-levels').prepend(`
       <tr>
          <td>${pledgeLevel.pledgeTitle}</td>
-         <td>${pledgeLevel.backerStats.remaining  === null ? 'Unlimited': pledgeLevel.backerStats.remaining}</td>
+         <td>${pledgeLevel.backerStats.remaining === null ? 'Unlimited' : pledgeLevel.backerStats.remaining}</td>
          <td>${pledgeLevel.backerStats.pledged }</td>
          <td>${pledgeLevel.backerStats.max || 'Unlimited'}</td>
          <td>${date}</td>
@@ -102,6 +111,11 @@ function addStatsToTable(pledgeLevels) {
     });
 }
 
+/**
+ * Retrieve Kickstarter pledge information from a given URL
+ * @param url {string}
+ * @param doneFn
+ */
 function getKickstarterPledgeInfo(url, doneFn) {
     $.ajax({
         type: 'POST',
