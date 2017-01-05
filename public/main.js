@@ -33,7 +33,7 @@ function retrievePledgeLevels(url) {
     $dropdown.append('<option>Loading ...</option>');
     let $firstOption = $dropdown.find('option:eq(0)');
     $firstOption.text("Loading ...");
-    $('input[name=kickstarterUrl]').attr('disabled', true);
+    $('#retrievePledgeLevelsBtn').attr('disabled', true);
 
     getKickstarterPledgeInfo(url, function (err, levels) {
         if (err) {
@@ -61,7 +61,11 @@ function watch(url, desiredLevels) {
             //do something
             return;
         }
-        $('#pledge-levels').parents('.jumbotron').removeAttr('hidden');
+
+        let $pledgeLevels = $('#pledge-levels');
+        $pledgeLevels.parents('.jumbotron').removeAttr('hidden');
+        $('select[name=pledgeLevels]').attr('disabled', true);
+        $('#watchBtn').attr('disabled', true);
         const relevantLevels = getRelevantPledges(results, desiredLevels);
         addStatsToTable(relevantLevels);
         const slotAvailable = relevantLevels.some(function (data) {
@@ -105,7 +109,6 @@ function addStatsToTable(pledgeLevels) {
     let date = (new Date()).toTimeString();
 
     pledgeLevels.forEach(function (pledgeLevel) {
-
         $('#pledge-levels').prepend(`
       <tr>
          <td>${pledgeLevel.pledgeTitle}</td>
@@ -140,17 +143,20 @@ function getKickstarterPledgeInfo(url, doneFn) {
 /**
  * Clear form fields and reset steps
  */
-function resetForm () {
+function resetForm() {
     let $pledgeLevelsTable = $('#pledge-levels');
     let $pledgeLevelsDropdown = $('select[name=pledgeLevels]');
     let $kickstarterUrl = $('input[name=kickstarterUrl]');
 
+    $('#retrievePledgeLevelsBtn').attr('disabled', false);
+    $('#watchBtn').attr('disabled', false);
     $kickstarterUrl.val('');
     $kickstarterUrl.attr('disabled', false);
     $pledgeLevelsTable.find('tr').remove();
     $pledgeLevelsTable.parents('.jumbotron').attr('hidden', true);
     $pledgeLevelsDropdown.empty();
     $pledgeLevelsDropdown.parents('.jumbotron').attr('hidden', true);
+    $pledgeLevelsDropdown.attr('disabled', true);
 
     clearInterval(intervalId);
 }
