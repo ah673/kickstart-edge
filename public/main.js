@@ -32,8 +32,8 @@ function retrievePledgeLevels(url) {
     $dropdown.children('option').remove();
     $dropdown.append('<option>Loading ...</option>');
     let $firstOption = $dropdown.find('option:eq(0)');
-
     $firstOption.text("Loading ...");
+    $('input[name=kickstarterUrl]').attr('disabled', true);
 
     getKickstarterPledgeInfo(url, function (err, levels) {
         if (err) {
@@ -137,11 +137,16 @@ function getKickstarterPledgeInfo(url, doneFn) {
     });
 }
 
+/**
+ * Clear form fields and reset steps
+ */
 function resetForm () {
     let $pledgeLevelsTable = $('#pledge-levels');
     let $pledgeLevelsDropdown = $('select[name=pledgeLevels]');
+    let $kickstarterUrl = $('input[name=kickstarterUrl]');
 
-    $('input[name=kickstarterUrl]').val('');
+    $kickstarterUrl.val('');
+    $kickstarterUrl.attr('disabled', false);
     $pledgeLevelsTable.find('tr').remove();
     $pledgeLevelsTable.parents('.jumbotron').attr('hidden', true);
     $pledgeLevelsDropdown.empty();
