@@ -33,7 +33,6 @@ function retrievePledgeLevels(url) {
     $dropdown.append('<option>Loading ...</option>');
     let $firstOption = $dropdown.find('option:eq(0)');
     $firstOption.text("Loading ...");
-    $('#retrievePledgeLevelsBtn').attr('disabled', true);
 
     getKickstarterPledgeInfo(url, function (err, levels) {
         if (err) {
