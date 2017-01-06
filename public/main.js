@@ -7,17 +7,17 @@ let intervalId = null;
 function listen() {
     let $kickstarterUrl = $('input[name=kickstarterUrl]');
 
-    $('#retrievePledgeLevelsBtn').click(function () {
+    $('#retrievePledgeLevelsBtn').click(function (event) {
         event.preventDefault();
         retrievePledgeLevels($kickstarterUrl.val());
     });
 
-    $('#watchBtn').click(function () {
+    $('#watchBtn').click(function (event) {
         event.preventDefault();
         watch($kickstarterUrl.val(), $('select[name=pledgeLevels]').val());
     });
 
-    $('#resetBtn').click(function () {
+    $('#resetBtn').click(function (event) {
         event.preventDefault();
         resetForm();
     });
