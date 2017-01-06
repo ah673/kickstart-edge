@@ -21,6 +21,11 @@ function listen() {
         event.preventDefault();
         resetForm();
     });
+
+    $('select[name=pledgeLevels]').on('change', function () {
+        const selectedPledgeLevels = $('select[name=pledgeLevels]').val();
+        $('#watchBtn').attr('disabled', !(Array.isArray(selectedPledgeLevels) && selectedPledgeLevels.length > 0));
+    })
 }
 
 /**
