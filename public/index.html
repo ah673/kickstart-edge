@@ -16,15 +16,22 @@
 
 <div class="container" id="main">
     <h1 class="title"><span class="black">Kick</span><span class="green">start-Edge</span></h1>
+    <h3 class="text-center">Monitor a Kickstarter campaign for openings in pledge levels</h3>
 
     <div class="jumbotron">
         <form>
             <div class="row">
-                <div class="col-md-6 col-md-offset-3 text-center">
-                    <div class="form-group">
-                        <input class="form-control" name="kickstarterUrl" placeholder="Kickstarter URL">
+                <div class="col-md-3 text-center">
+                    <h2>Step 1</h2>
+                </div>
+                <div class="col-md-6">
+                    <p>Enter a Kickstarter URL</p>
+                    <div class=" text-center">
+                        <div class="form-group">
+                            <input class="form-control" name="kickstarterUrl" placeholder="Kickstarter URL">
+                        </div>
+                        <button class="btn btn-default" id="retrievePledgeLevelsBtn">Retrieve Pledge Levels</button>
                     </div>
-                    <button class="btn btn-default" id="retrievePledgeLevelsBtn">Retrieve Pledge Levels</button>
                 </div>
             </div>
         </form>
@@ -32,18 +39,26 @@
 
     <div class="jumbotron" hidden>
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-center">
-                <div class="form-group">
-                    <select class="form-control" name="pledgeLevels" title="Pledge Levels" disabled multiple>
-                    </select>
+            <div class="col-md-3 text-center">
+                <h2>Step 2</h2>
+            </div>
+            <div class="col-md-6">
+                <p>Select pledge levels of interest</p>
+                <div class="text-center">
+                    <div class="form-group">
+                        <select class="form-control" name="pledgeLevels" title="Pledge Levels" disabled multiple>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" id="watchBtn" disabled>Watch</button>
+                    <button class="btn btn-danger" id="resetBtn">Reset</button>
                 </div>
-                <button class="btn btn-success" id="watchBtn" disabled>Watch</button>
-                <button class="btn btn-danger" id="resetBtn">Reset</button>
             </div>
         </div>
     </div>
 
     <div class="jumbotron" hidden>
+        <p class="lead">Keep your browser open to keep this app running!</p>
+        <span>When the above pledge level(s) open up, a browser tab/window will open to the Kickstarter campaign for you to change your pledge</span>
         <table class="table table-striped">
             <thead>
                 <tr>
