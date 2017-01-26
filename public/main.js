@@ -110,18 +110,27 @@ function getRelevantPledges(results, desiredLevels) {
  * @param pledgeLevels {Array}
  */
 function addStatsToTable(pledgeLevels) {
-    let date = (new Date()).toTimeString();
+    let date = (new Date()).toLocaleTimeString("en-us", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 
     pledgeLevels.forEach(function (pledgeLevel) {
+        const stats = pledgeLevel.backerStats;
+        const isAvailable = (stats.remaining > 0) || (stats.remaining === null);
+
         $('#pledge-levels').prepend(`
-      <tr>
-         <td>${pledgeLevel.pledgeTitle}</td>
-         <td>${pledgeLevel.backerStats.remaining === null ? 'Unlimited' : pledgeLevel.backerStats.remaining}</td>
-         <td>${pledgeLevel.backerStats.pledged }</td>
-         <td>${pledgeLevel.backerStats.max || 'Unlimited'}</td>
-         <td>${date}</td>
-      </tr>
-      `);
+            <tr class="${isAvailable ? 'available' : ''}">
+                <td>${pledgeLevel.pledgeTitle}</td>
+                <td>${stats.remaining === null ? 'Unlimited' : stats.remaining}</td>
+                <td>${stats.pledged }</td>
+                <td>${stats.max || 'Unlimited'}</td>
+                <td>${date}</td>
+            </tr>
+        `);
     });
 }
 

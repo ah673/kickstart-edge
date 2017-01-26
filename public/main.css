@@ -42,3 +42,10 @@ body {
     color: #626369;
 }
 
+#backerStatsTable tr.available:nth-of-type(odd) {
+    background-color: #cbf2cc;
+}
+
+#backerStatsTable tr.available:nth-of-type(even) {
+    background-color: #bbe2bc;
+}
