@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- App -->
+    <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+
+<body>
+
+<div class="container" id="main">
+    <h1 class="title"><span class="black">Kick</span><span class="green">start-Edge</span></h1>
+    <h3 class="text-center">Monitor a Kickstarter campaign for openings in pledge levels</h3>
+
+    <div class="jumbotron">
+        <form>
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <h2>Step 1</h2>
+                </div>
+                <div class="col-md-6">
+                    <p>Enter a Kickstarter URL</p>
+                    <div class=" text-center">
+                        <div class="form-group">
+                            <input class="form-control" name="kickstarterUrl" placeholder="Kickstarter URL">
+                        </div>
+                        <button class="btn btn-default" id="retrievePledgeLevelsBtn">Retrieve Pledge Levels</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="jumbotron" hidden>
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <h2>Step 2</h2>
+            </div>
+            <div class="col-md-6">
+                <p>Select pledge levels of interest</p>
+                <div class="text-center">
+                    <div class="form-group">
+                        <select class="form-control" name="pledgeLevels" title="Pledge Levels" disabled multiple>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" id="watchBtn" disabled>Watch</button>
+                    <button class="btn btn-danger" id="resetBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron" hidden>
+        <p class="lead">Keep your browser open to keep this app running!</p>
+        <span>When the above pledge level(s) open up, a browser tab/window will open to the Kickstarter campaign for you to change your pledge</span>
+        <table class="table table-striped" id="backerStatsTable">
+            <thead>
+                <tr>
+                    <th>Pledge Level</th>
+                    <th>Available</th>
+                    <th>Pledged</th>
+                    <th>Max</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody id="pledge-levels">
+
+
+            </tbody>
+        </table>
+    </div>
+</div><!-- /.container -->
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<!-- App -->
+<script src="main.js"></script>
+
+</body>
+</html>
